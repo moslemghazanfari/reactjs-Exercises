@@ -1,0 +1,48 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: gainsboro;
+  display: flex;
+  /*height: 100dvh;  */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  row-gap: 1rem;
+}
+
+
+#createbtn {
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  background-color: blue;
+  color: white;
+  
+}
+#createbtn:hover{
+  background-color:rgb(50, 50, 255) ;
+  color: aliceblue;
+  scale: 1.015;
+}
+
+table>thead {
+  background-color: blue;
+  color: white;
+}
+thead>tr>td{
+  padding: 10px;
+}
+tbody {
+  background-color: whitesmoke;
+}
+table>tbody>tr:nth-child(odd) {
+  background-color: rgb(235, 235, 235);
+}
+td{
+  text-align: center;
+}

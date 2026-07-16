@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic table</title>
+  <link rel="stylesheet" href="dynamictable.css">
+</head>
+
+<body>
+  <h1>Dynamic Table Generator</h1>
+
+  <div>
+    <label for="rowcount">Row Count</label>
+    <input type="number" id="rowcount" value="10" min="1">
+  </div>
+  <div>
+    <label for="columncount">Column Count</label>
+    <input type="number" id="columncount" value="12" min="1" >
+  </div>
+  <input type="button" id="createbtn" value="Create Table">
+
+  <div id="continertable"></div>
+
+  <script src="dynamicTable.js"></script>
+</body>
+
+</html>
