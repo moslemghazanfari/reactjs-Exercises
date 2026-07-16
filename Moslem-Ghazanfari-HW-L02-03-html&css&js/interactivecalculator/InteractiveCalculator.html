@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive calculator</title>
+  <link rel="stylesheet" href="interactivecalculator.css">
+</head>
+
+<body>
+  <h1>Simple Interactive Calculator</h1>
+  <p>use <strong>Numpad</strong> keyboard or <strong>click button</strong> calculator</p>
+  <div class="calc-continer">
+    <div id="expression" class="inputbox">0</div>
+    <div id="answer" class="answer">0</div>
+    <button class="btn-number" data-num="1">1</button>
+    <button class="btn-number" data-num="2">2</button>
+    <button class="btn-number" data-num="3">3</button>
+    <button class="btn-operate" data-operator="*"> &#215; </button>
+    <button class="btn-number" data-num="4">4</button>
+    <button class="btn-number" data-num="5">5</button>
+    <button class="btn-number" data-num="6">6</button>
+    <button class="btn-operate" data-operator="/"> &#247 </button>
+    <button class="btn-number" data-num="7">7</button>
+    <button class="btn-number" data-num="8">8</button>
+    <button class="btn-number" data-num="9">9</button>
+    <button class="btn-operate" data-operator="-"> - </button>
+    <button class="btn-number column2" data-num="0">0</button>
+    <button class="btn-number" data-dot=".">.</button>
+    <button class="btn-operate row2" data-operator="+"> + </button>
+    <button class="btn-operate column3" data-action="clear"> clear </button> 
+  </div>
+  <!-- </div> -->
+  <script src="interactiveCalculator.js"></script>
+</body>
+
+</html>
