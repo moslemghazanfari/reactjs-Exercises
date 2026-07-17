@@ -1,46 +1,62 @@
 const expressionbox = document.getElementById("expression");
 const answerbox = document.getElementById("answer");
-let expression; let currentnumber; let lastoperator; let lastnumber; let flagDot;
+const buttons = document.querySelectorAll("button");
+let expression;
+let flagDot;
+let currentnumber;
 let result = 0;
+
 const clear = () => {
   expressionbox.textContent = "0";
   answerbox.textContent = "0";
   expression = "";
   currentnumber = "";
-  lastoperator = "";
-  lastnumber = "";
   flagDot = false;
   result = 0;
 };
 clear();
-const buttons = document.querySelectorAll("button");
-buttons.forEach((button) => button.addEventListener("click", (event) => {
-  event.stopPropagation();
 
-  if (button.dataset.num) {
+const keyhandeler = (key) => {
+  if (expression.at(-1) == "=") {
+    clear();
+  }
+  if (hasNumberCHAR(key)) {
     if (currentnumber == "0") {
       currentnumber = "";
       backspace();
     }
-    updateexpersion(button.dataset.num);
-    currentnumber += button.dataset.num;
-    calculate(lastoperator);
-    return;
-  }
-  if (button.dataset.dot) {
-    handledot(button.dataset.dot);
-    return;
-  }
-  if (button.dataset.operator) {
-    handleOperator(button.dataset.operator);
+    updateexpersion(key);
+    currentnumber += key;
+    calculate();
     return;
   }
 
-  if (button.dataset.action) {
-    handleaction(button.dataset.action);
-    return;
+  switch (key) {
+    case '.': handledot('.')
+      break;
+    case "*": case "/": case "+": case "-": handleOperator(key);
+      break
+    case '=':case "Enter":  
+    case "calculate": if (expression != "") {
+      calculate();
+      updateexpersion("=");
+    }
+      break
+    case "clear": clear();
+      break
+      case "Backspace":backspace();
+                      (expression != "")?calculate():clear();
+      break
   }
+}
 
+buttons.forEach((button) => button.addEventListener("click", (event) => {
+
+  event.stopPropagation();
+  if (button.dataset.num) keyhandeler(button.dataset.num);
+  if (button.dataset.dot) keyhandeler(button.dataset.dot);
+  if (button.dataset.operator) keyhandeler(button.dataset.operator)
+  if (button.dataset.action) keyhandeler(button.dataset.action)
 
 }))
 
@@ -48,24 +64,26 @@ const updateexpersion = (char) => {
   expression += char;
   display(expression);
 };
+
 const handleOperator = (operator) => {
-  if (expression == "0") return;
-  if (expression.at(-1) == '.') return;
-  if(currentnumber=="-")return;
+  if (expression == "0" || expression == "") return;
+  if (operator == expression.at(-1)) return;
+  if (expression.at(-1) == '.') {
+    updateexpersion(`0${operator}`);
+    return;
+  }
   if (operator == "-" && currentnumber == "") { 
-    currentnumber="-";
     updateexpersion(operator);
     return;
   }
-  if ("*,/,+,-".includes(expression.at(-1))) {
+  if ("*/+-".includes(expression.at(-1))) {
     backspace();
   }
   updateexpersion(operator);
-  lastoperator = operator;
-  lastnumber = result || currentnumber;
   currentnumber = "";
   flagDot = false;
 }
+
 const handledot = (dot) => {
   if (currentnumber == "") {
     currentnumber = `0${dot}`;
@@ -78,41 +96,35 @@ const handledot = (dot) => {
     flagDot = true;
   }
 }
-const handleaction = (action) => {
-  switch (action) {
-    case "calculate": calculate();
-      break
-    case "clear": clear();
-      break
-    /* case "backspace": backspace();
-      break */
-  }
-};
+
 const display = (str) => {
   expressionbox.textContent = str;
 };
 
-const calculate = (lastoperate) => {
-  // try {
-  switch (lastoperate) {
-    case "*": result = parseFloat(lastnumber) * parseFloat(currentnumber);
-      break
-    case "/": result = parseFloat(lastnumber) / parseFloat(currentnumber);
-      break
-    case "+": result = parseFloat(lastnumber) + parseFloat(currentnumber);
-      break
-    case "-": result = parseFloat(lastnumber) - parseFloat(currentnumber);
-      break
-    default: lastnumber = currentnumber;
-  }
-  // } catch (error) {
+const calculate = () => {
+  let operand="";
+  if ("*/+-".includes(expression.at(-1))){
+    operand=expression.at(-1)
+    backspace();
+  } 
 
-  // }
-  answerbox.textContent = result;
+  try {
+    result = eval(expression);
+    //sample expression= "9-0/0"=>NaN
+    if (isNaN(result) || result === null)
+      throw new Error("NoN or null");
+
+  } catch (error) {
+    result = "incorect expression!!"
+  }
+  finally {
+    answerbox.textContent = result;
+  }
+  if(operand!="")updateexpersion(operand);
 };
+
 const backspace = () => {
   expression = expression.slice(0, -1);
-  //calculate(lastoperator);
   display(expression)
 };
 
@@ -122,26 +134,14 @@ const hasNumberCHAR = (str) => {
       return true;
   }
 }
-document.addEventListener("keypress", (keyEvent) => {
+
+document.addEventListener("keydown", (keyEvent) => {
   keyEvent.preventDefault();
 
-  if (hasNumberCHAR(keyEvent.key)) {
-    if (currentnumber == "0") {
-      currentnumber = "";
-      backspace();
-    }
-    updateexpersion(keyEvent.key);
-    currentnumber += keyEvent.key;
-    calculate(lastoperator);
+  /* if (keyEvent.key == '=' || keyEvent.key === "Enter") {
+    keyhandeler("calculate");
     return;
-  }
-  if (keyEvent.key == '.') {
-    handledot(keyEvent.key);
-    return;
-  }
-  if (['*', '/', '+', '-'].includes(keyEvent.key)) {
-    handleOperator(keyEvent.key);
-  }
+  } */
+  keyhandeler(keyEvent.key);
 
 })
-
