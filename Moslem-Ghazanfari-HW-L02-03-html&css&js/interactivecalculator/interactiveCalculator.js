@@ -20,7 +20,9 @@ const keyhandeler = (key) => {
   if (expression.at(-1) == "=") {
     clear();
   }
-  if (hasNumberCHAR(key)) {
+ // console.log(key, key.codePointAt(0));
+
+  if (hasNumberCHAR(key.at(0))) {
     if (currentnumber == "0") {
       currentnumber = "";
       backspace();
@@ -36,7 +38,7 @@ const keyhandeler = (key) => {
       break;
     case "*": case "/": case "+": case "-": handleOperator(key);
       break
-    case '=':case "Enter":  
+    case '=': case "Enter":
     case "calculate": if (expression != "") {
       calculate();
       updateexpersion("=");
@@ -44,8 +46,13 @@ const keyhandeler = (key) => {
       break
     case "clear": clear();
       break
-      case "Backspace":backspace();
-                      (expression != "")?calculate():clear();
+    case "Backspace": backspace();
+      //restore currentnumber
+      let strarray = Array.from(expression);
+      currentnumber = expression.substring(strarray.findLastIndex((value) => "*/-+".includes(value)) + 1, expression.length);
+      flagDot = currentnumber.includes('.') ? true : false;
+      if (currentnumber == "0") currentnumber = "";
+      (expression != "") ? calculate() : clear();
       break
   }
 }
@@ -72,7 +79,7 @@ const handleOperator = (operator) => {
     updateexpersion(`0${operator}`);
     return;
   }
-  if (operator == "-" && currentnumber == "") { 
+  if (operator == "-" && currentnumber == "") {
     updateexpersion(operator);
     return;
   }
@@ -102,12 +109,11 @@ const display = (str) => {
 };
 
 const calculate = () => {
-  let operand="";
-  if ("*/+-".includes(expression.at(-1))){
-    operand=expression.at(-1)
-    backspace();
-  } 
 
+  if ("*/+-".includes(expression.at(-1))) {
+    answerbox.textContent = 0;
+    return;
+  }
   try {
     result = eval(expression);
     //sample expression= "9-0/0"=>NaN
@@ -120,7 +126,7 @@ const calculate = () => {
   finally {
     answerbox.textContent = result;
   }
-  if(operand!="")updateexpersion(operand);
+
 };
 
 const backspace = () => {
@@ -129,6 +135,7 @@ const backspace = () => {
 };
 
 const hasNumberCHAR = (str) => {
+
   for (const char of str) {
     if (char.codePointAt(0) >= 48 && char.codePointAt(0) <= 57)
       return true;
@@ -137,11 +144,7 @@ const hasNumberCHAR = (str) => {
 
 document.addEventListener("keydown", (keyEvent) => {
   keyEvent.preventDefault();
-
-  /* if (keyEvent.key == '=' || keyEvent.key === "Enter") {
-    keyhandeler("calculate");
-    return;
-  } */
-  keyhandeler(keyEvent.key);
+  //console.log(keyEvent.key, keyEvent.key.codePointAt(0));
+   keyhandeler(keyEvent.key);
 
 })
