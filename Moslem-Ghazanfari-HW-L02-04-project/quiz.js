@@ -98,7 +98,7 @@ const showquestion = () => {
 }
 
 const showanswer = () => {
-
+  clearInterval(timer);
   let useranswer = localStorage.getItem("Useranswer");
   if (useranswer != null)
     inputansewer.item(useranswer).checked = true;
@@ -133,6 +133,8 @@ const showanswer = () => {
 
 const nextquestion = () => {
 
+  
+
   showquestion();
   if (isshowanswer) {
     showanswer();
@@ -146,7 +148,7 @@ const nextquestion = () => {
   btnNext.disabled = true;
   localStorage.removeItem("Useranswer");
   let i = 15;
-  const timer = setInterval(() => {
+   timer=setInterval(() => {
     document.querySelector("#timer").textContent = `زمان پاسخ سوال ( ${ --i } )`;
     if (i == 0) {
       showanswer();
@@ -176,6 +178,7 @@ let currentquestion = 0;
 let indexcorrectanswer = -1;
 let resultCurrectAnswer = 0;
 let isshowanswer = false;
+let timer ;
 const selectCategory = document.getElementById("category");
 const selectDifficulty = document.getElementById("Difficulty");
 const countquestion = document.querySelector("input");
