@@ -29,7 +29,7 @@ const getcategory = async () => {
   }
 }
 
-const datajson = `{ "response_code": 0, 
+/* const datajson = `{ "response_code": 0, 
   "results": [{ "type": "multiple", 
     "difficulty": "easy", 
     "category": "Entertainment: Books",
@@ -44,7 +44,7 @@ const datajson = `{ "response_code": 0,
            "incorrect_answers": ["Fletcher Christian", "Jay Gatsby", "Randall Flagg"]
            }]
            }`;
-const data = JSON.parse(datajson);
+const data = JSON.parse(datajson); */
 
 function displaynone(element) {
   document.getElementById(element).className = "display-none";
@@ -132,9 +132,6 @@ const showanswer = () => {
 }
 
 const nextquestion = () => {
-
-  
-
   showquestion();
   if (isshowanswer) {
     showanswer();
@@ -152,7 +149,6 @@ const nextquestion = () => {
     document.querySelector("#timer").textContent = `زمان پاسخ سوال ( ${ --i } )`;
     if (i == 0) {
       showanswer();
-      clearInterval(timer);
     }
   }, 1000);
 }
