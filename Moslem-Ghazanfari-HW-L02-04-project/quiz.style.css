@@ -1,0 +1,135 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.farsi{
+  direction: rtl;
+}
+ input[type="radio"]{
+  appearance: none;
+  background-color:white;
+  width:1.15em ;
+  height:1.15em ;
+  border: 0.15em solid blueviolet;
+  border-radius: 20%;
+ }
+ input[type="radio"]:checked{
+  background-color: steelblue;
+  outline: 0.1em solid blueviolet;
+}
+.display-none{
+  display: none;
+}
+
+.section1 {
+  display: grid;
+  direction: rtl;
+  grid-template-columns: repeat(2, 1fr);
+  min-width: 550px;
+  gap: 20px;
+}
+
+.borderbox {
+  background-color: aliceblue;
+  border-radius: 10px;
+  border: 3px solid rgb(243, 230, 230);
+  box-shadow: 1px 1px 5px 5px  rgba(220, 220, 220,.8);
+  padding: 20px;
+  
+}
+
+.timer{
+  text-align: center;
+  font-weight:600;
+  background-color: beige;
+  color:blue;
+}
+.title {
+  grid-column: 2 span;
+}
+
+.p1 {
+  grid-column: 2 span;
+}
+
+.btnstart {
+  grid-column: 2 span;
+  background-color: rgb(60, 60, 248);
+  color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btnstart:hover {
+
+  background-color: rgb(80, 80, 248);
+  scale: 1.01;
+  cursor: pointer;
+}
+
+.btnnext{
+  background-color: rgb(248, 164, 19);
+  color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.btnresult{
+  background-color: rgb(11, 204, 46);
+  color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+}
+.section2 {
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+  row-gap: 2rem;
+}
+
+.section3{
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+}
+.option{
+  padding: 10px;
+  background-color: burlywood;
+  line-height: 2rem;
+}
+.option > input[type="radio"],label{
+   cursor: pointer;
+}
+
+.btn-answer{
+  direction: rtl;
+}
+
+.show-answer{
+  background-color: green;
+  color:yellow;
+}
+
+.show-incorrect{
+  background-color: red;
+
+}
+
+#list-question>li:nth-child(odd){
+background-color: gainsboro;
+}
